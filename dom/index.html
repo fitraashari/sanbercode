@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Latihan DOM</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+    <style> 
+
+    .card{
+        display: inline-block;
+        margin-top: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Mini Ecommerce</a>
+            <form class="form-inline" id="formItem">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search"  id="keyword" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchItem">Search</button>
+            </form>
+            <button class="btn btn-primary" id="cart"><i class="fas fa-shopping-cart"></i>(0)</button>
+        </nav>
+        <div class="row">
+            <div class="col-md-12 mt-2"  id="listBarang" >
+                
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    var items = [
+    ['001', 'Keyboard Logitek', 60000, 'Keyboard yang mantap untuk kantoran', 'logitek.jpeg'], 
+    ['002', 'Keyboard MSI', 300000, 'Keyboard gaming MSI mekanik', 'msi.jpeg'],
+    ['003', 'Mouse Genius', 50000, 'Mouse Genius biar lebih pinter', 'genius.jpeg'],
+    ['004', 'Mouse Jerry', 30000, 'Mouse yang disukai kucing', 'jerry.jpeg']
+]
+//release 1
+var form=document.getElementById("formItem");
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("listBarang").innerHTML = "";
+    var kata=document.getElementById("keyword").value;
+    cari = kata.toUpperCase();
+    
+    // var nmitem = document.getElementById("itemName");
+    // for(var i=0;i<card.length;i++){
+    // alert(nmitem.textContent)
+    // }
+    var dtcr='';
+    for(var i=0;i<items.length;i++){
+        if(items[i][1].toUpperCase().indexOf(cari) > -1){
+            dtcr+=barang(items[i]);
+        }
+    }
+    
+    //dtcr+='</div>';
+    document.getElementById("listBarang").innerHTML = dtcr;
+})
+//release 0
+function barang(items){
+    var result='';
+        result+='<div class="card mr-2 '+items[0]+'" style="width: 18rem;">';
+        result+='<img src="'+items[4]+'" class="card-img-top" alt="...">';
+        result+='<div class="card-body">';
+        result+='<h5 class="card-title" id="itemName-'+items[0]+'">'+items[1]+'</h5>';
+        result+='<p class="card-text" id="itemDesc-'+items[0]+'">'+items[3]+'</p>';
+        result+='<p class="card-text">Rp '+items[2]+'</p>';
+        result+='<a href="#" class="btn btn-primary" onclick="tambah()" id="addCart-'+items[0]+'">Tambahkan ke keranjang</a>';
+        result+='</div>';
+        result+='</div>';
+    //
+    return result;
+}
+var hasil = '';
+for(var i=0;i<items.length;i++){
+    hasil+=barang(items[i]);
+}
+//hasil+='</div>';
+//alert(hasil);
+document.getElementById('listBarang').innerHTML = hasil;
+
+
+//release2
+var cart = document.getElementById("cart");
+var li = cart.childNodes[1];
+
+function tambah(){
+    var jum = li.textContent;
+    
+    //alert(jum);
+    var hasil= '';
+    if(!isNaN(jum[2])){
+    hasil = parseInt(jum[1]+jum[2])+1;
+    }else{
+        hasil = parseInt(jum[1])+1;
+    }
+    li.nodeValue='('+hasil+')';
+    
+}
+</script>
+</body>
+</html>
